@@ -1,0 +1,32 @@
+name: Validate mod
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Install Lua
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.4
+      - name: Check Lua syntax and behavior
+        run: |
+          for file in mod/OT1AutoResolve/Scripts/*.lua; do
+            luac5.4 -p "$file"
+          done
+          lua5.4 tests/test_mod.lua "$GITHUB_WORKSPACE"
+      - name: Check Python syntax and package
+        run: |
+          python3 -m py_compile tools/package_mod.py tools/build_catalog.py
+          python3 tools/package_mod.py

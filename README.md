@@ -1,476 +1,99 @@
-# Unreal Engine 4/5 Scripting System
+# 八方旅人 1 · 等级压制自动结算
 
-Lua scripting system platform, C++ Modding API, SDK generator, blueprint mod loader, live property editor and other dumping utilities for UE4/5 games.
+[English](README.en.md) · [使用说明](mod/README.md) · [验证记录](docs/VALIDATION.md)
 
-## Major features
+基于 **UE4SS 3.0.1** 的《八方旅人 1》Mod：队伍等级明显高于普通暗雷敌人时，跳过战斗转场，直接获得奖励。
 
-- [Lua Scripting API](https://docs.ue4ss.com/dev/lua-api.html): Write lua mods based on the UE object system
-- [Blueprint Modloading](https://docs.ue4ss.com/dev/feature-overview/blueprint-modloader.html): Spawn blueprint mods automatically without editing/replacing game files
-- [C++ Modding API](https://docs.ue4ss.com/dev/guides/creating-a-c%2B%2B-mod.html): Write C++ mods based on the UE object system
-- [Live Property Viewer and Editor](https://docs.ue4ss.com/dev/feature-overview/live-view.html): Search, view, edit & watch the properties of every loaded object, great for debugging mods or figuring out how values are changed during runtime
-- [UHT Dumper](https://docs.ue4ss.com/dev/feature-overview/dumpers.html#unreal-header-tool-uht-dumper): Generate Unreal Header Tool compatible C++ headers for creating a mirror .uproject for your game
-- [C++ Header Dumper](https://docs.ue4ss.com/dev/feature-overview/dumpers.html#c-header-generator): Generate standard C++ headers from reflected classes and blueprints, with offsets
-- [Universal UE Mods](https://docs.ue4ss.com/dev/feature-overview/universal-mods.html): Unlock the game console and other universal mods
-- [Dumpers for File Parsing](https://docs.ue4ss.com/dev/feature-overview/dumpers.html#usmap-dumper): Generate `.usmap` mapping files for unversioned properties
-- [UMAP Recreation Dumper](https://docs.ue4ss.com/dev/feature-overview/dumpers.html#umap-recreation-dumper): Dump all loaded actors to file to generate `.umaps` in-editor
-- Other Features, including [Experimental](https://docs.ue4ss.com/dev/feature-overview/experimental.html) features at times
+适配目标：**Windows Steam build 5272616**。当前版本：**0.1.3**。
 
-## Targeting UE Versions: From 4.7 To 5.8
+## 实现效果
 
-The goal of UE4SS is not to be a plug-n-play solution that always works with every game.
-The goal is to have an underlying system that works for most games.
-You may need to update AOBs on your own, and there's a guide for that below.
+- **仅处理地图行走触发的普通随机暗雷**。地图 Boss、剧情战、固定事件战、比试和唆使不参与；无法确认的遭遇保留正常战斗。
+- 上场队伍最高等级达到「地区危险等级与抽中敌群最高等级的较高值 + 等级差」时生效；默认等级差为 **1**。
+- 发放 EXP、JP、金钱和概率掉落，计算已装备的队伍奖励被动、EXP/JP 奖励饰品加成，按原生规则叠加和取整。掉落遵守原生背包上限。
+- 倒下角色不获得 EXP/JP，也不会因自动结算升级复活；存活的满级角色仍获得 JP。
+- 角色升级时回满该角色的 HP/MP；获得的金钱计入原生累计金钱成就记录。
+- **F6** 开关并保存状态，使用原生非阻塞提示。提示跟随界面语言：简体／繁体中文显示对应中文，其他语言使用英文，与语音设置无关。
 
-## Basic Installation
+## 安装
 
-The easiest installation is via downloading the non-dev version of the latest non-experimental build from [Releases](https://github.com/UE4SS-RE/RE-UE4SS/releases/latest) and extracting the zip content to `{game directory}/GameName/Binaries/Win64/`.
+本仓库和打包工具生成的安装包均**不包含 UE4SS 加载器**。
 
-If your game is in the custom config list, extract the contents from the relevant folder to `Win64` as well.
-
-If you are planning on doing mod development using UE4SS, you can do the same as above but download the zDEV version instead.
-
-### Command Line Options
-
-If RE-UE4SS is installed via proxy DLL, the following command line options are available:
-
-- `--disable-ue4ss` - Temporarily disable UE4SS without uninstalling by launching the game with this argument.
-- `--ue4ss-path <path>` - Specify a custom path to UE4SS.dll. Supports both absolute paths (e.g., `C:\custom\UE4SS.dll`) and relative paths (e.g., `dev\builds\UE4SS.dll` relative to the game executable directory). Useful for testing different UE4SS builds without modifying installation files. 
-
-### Environment Variables
-
-RE-UE4SS supports the following environment variables:
-
-- `UE4SS_MODS_PATHS` - Semicolon-separated list of additional mods directories to load. Paths are processed in reverse order (first entry has highest priority), similar to the `PATH` variable. Example: `C:\SharedMods;D:\GameMods;E:\TestMods`.
-
-## Links
-
-  [Full installation guide](https://docs.ue4ss.com/dev/installation-guide.html)
-
-  [Fixing compatibility problems](https://docs.ue4ss.com/dev/guides/fixing-compatibility-problems.html)
-
-  [Lua API - Overview](https://docs.ue4ss.com/dev/lua-api.html)
-
-  [Generating UHT compatible headers](https://docs.ue4ss.com/dev/guides/generating-uht-compatible-headers.html)
-
-  [Custom Game Configs](https://docs.ue4ss.com/dev/custom-game-configs.html)
-
-  [Creating Compatible Blueprint Mods](https://www.youtube.com/watch?v=fB3yT85XhVA)
-
-  [UE4SS Discord Server Invite](https://discord.gg/7qhRGHF9Tt)
-
-  [Unreal Engine Modding Discord Server Invite](https://discord.gg/unreal-engine-modding-876613187204685934)
-
-## Build requirements
-
-- Windows is required for native builds. Native Linux builds are not currently supported, but Windows binaries can be [cross-compiled from Linux](#cross-compiling-windows-binaries-on-linux) using the separate prerequisites and instructions below.
-- For native Windows builds, a version of MSVC that supports C++23:
-  - MSVC toolset version >= 14.43.0
-  - MSVC version >= 19.43
-  - Visual Studio version >= 17.13
-  - More compilers will hopefully be supported in the future.
-- [Rust toolchain >= 1.73.0](https://www.rust-lang.org/tools/install)
-- [CMake >= 3.22](https://cmake.org/download/)
-- A build system: either [Ninja](https://ninja-build.org/) or MSVC (included with Visual Studio)
-
-## Build instructions
-
-1. Clone the repo.
-2. Execute this command: `git submodule update --init --recursive`
-    Make sure your Github account is linked to your Epic Games account for UE source access.
-    Do not use the `--remote` option because that will force third-party dependencies to update to the latest commit, and that can break things.
-    You will need your github account to be linked to an Epic games account to pull the Unreal pseudo code submodule.
-
-There are several different ways you can build UE4SS.
-
-## Building from CLI
-
-### Build Modes
-
-The build modes are structured as follows: `<Target>__<Config>__<Platform>`
-
-Currently supported options for these are:
-
-* `Target`
-  * `Game` - for regular games on UE versions greater than UE 4.21
-  * `LessEqual421` - for regular games on UE versions less than or equal to UE 4.21
-  * `CasePreserving` - for games built with case preserving enabled
-
-* `Config`
-  * `Dev` - development build
-  * `Debug` - debug build
-  * `Shipping` - shipping(release) build
-  * `Test` - build for tests
-
-* `Platform`
-  * `Win64` - 64-bit windows
-
-### Basic Build Commands
-
-To build UE4SS with CMake, use the following commands:
-
-```bash
-# Configure with Ninja (recommended for faster builds, single-configuration)
-cmake -B build_cmake_Game__Shipping__Win64 -G Ninja -DCMAKE_BUILD_TYPE=Game__Shipping__Win64
-
-# Build with Ninja
-cmake --build build_cmake_Game__Shipping__Win64
-
-# Or configure with MSVC (multi-configuration, allows switching configs without reconfiguring)
-cmake -B build_cmake_Game__Shipping__Win64 -G "Visual Studio 17 2022"
-
-# Build with MSVC (requires --config flag)
-cmake --build build_cmake_Game__Shipping__Win64 --config Game__Shipping__Win64
-```
-
-### Configuration Options
-
-CMake allows you to configure various build options. Here are some useful options:
-
-#### Proxy Path
-
-By default, UE4SS generates a proxy based on `C:\Windows\System32\dwmapi.dll`. To change this, set the CMake variable:
-
-```bash
-cmake -B build -DUE4SS_PROXY_PATH="<path to proxy dll>" -DCMAKE_BUILD_TYPE=Game__Shipping__Win64
-```
-
-#### Profiler Flavor
-
-By default, UE4SS has profiling disabled (`None`). To enable profiling, you need both a profiler flavor AND a build configuration that includes STATS:
-
-```bash
-# STATS are enabled by default in Dev and Test builds
-cmake -B build -DPROFILER_FLAVOR=<Tracy|Superluminal|None> -DCMAKE_BUILD_TYPE=Game__Dev__Win64
-```
-
-> [!NOTE]
-> Profiling requires STATS support. By default, `Dev` and `Test` configurations include STATS, while `Shipping` and `Debug` do not. You can manually enable STATS for any configuration by adding compile definitions:
-> ```bash
-> cmake -B build -DPROFILER_FLAVOR=Tracy -DCMAKE_BUILD_TYPE=Game__Shipping__Win64 -DCMAKE_CXX_FLAGS="-DSTATS"
-> ```
-
-### Helpful CMake Commands
-
-| Command | Description |
-| --- | --- |
-| `cmake -B <build_dir> -G <generator>` | Configure the project with a specific generator (Ninja or "Visual Studio 17 2022") |
-| `cmake --build <build_dir>` | Build with Ninja (single-config generator) |
-| `cmake --build <build_dir> --config <mode>` | Build with MSVC (multi-config generator, `--config` required) |
-| `cmake --build <build_dir> --clean-first` | Clean and rebuild (add `--config <mode>` for MSVC) |
-| `cmake --build <build_dir> --target <target>` | Build a specific target (add `--config <mode>` for MSVC) |
-| `cmake --build <build_dir> --verbose` | Build with verbose output (add `--config <mode>` for MSVC) |
-
-### Opening in an IDE
-
-#### Visual Studio
-
-CMake has built-in support for generating Visual Studio solutions:
-
-```bash
-cmake -B build -G "Visual Studio 17 2022"
-```
-
-Then open the generated `.sln` file in the `build` directory.
-
-Alternatively, Visual Studio 2022 has native CMake support - you can open the folder directly in Visual Studio and it will automatically detect the CMakeLists.txt file.
-
-#### CLion / Other CMake IDEs
-
-Most modern IDEs (CLion, Visual Studio Code with CMake Tools, etc.) have native CMake support. Simply open the project folder and the IDE will automatically detect and configure the CMake project.
-
-Note that you should also commit & push the submodules that you've updated if the reason why you updated was not because someone else pushed an update, and you're just catching up to it.
-
-### Cross-Compiling Windows Binaries on Linux
-
-UE4SS supports cross-compilation from Linux to Windows using two approaches: **xwin** (recommended) or **msvc-wine**.
-
-#### Prerequisites for All Cross-Compilation
-
-- [Rust toolchain >= 1.73.0](https://www.rust-lang.org/tools/install) with the `x86_64-pc-windows-msvc` target:
-  ```bash
-  rustup target add x86_64-pc-windows-msvc
-  ```
-  For Rust installations without rustup, install the Windows target standard library separately. It must match the installed Rust compiler build.
-- [CMake >= 3.22](https://cmake.org/download/)
-- [Ninja build system](https://ninja-build.org/)
-
-#### Option 1: Cross-Compiling with xwin (Recommended)
-
-**xwin** downloads and packages the Microsoft CRT headers/libraries and Windows SDK headers/libraries needed for cross-compilation, without requiring a Windows installation.
-
-##### Prerequisites
-
-- LLVM/Clang with Windows target support, including `clang-cl`, `lld-link`, and the MASM-compatible `llvm-ml` assembler:
-  ```bash
-  # On Ubuntu/Debian
-  sudo apt install clang lld llvm
-
-  # On Arch Linux
-  sudo pacman -S clang lld llvm
-
-  # On Enterprise Linux 10 (e.g. RHEL, CentOS Stream, AlmaLinux)
-  sudo dnf install clang lld llvm
-  ```
-- [xwin](https://github.com/Jake-Shadle/xwin), installed using Cargo:
-  ```bash
-  cargo install xwin
-  ```
-- Wine and Linux `binfmt_misc` support for a complete cross-build. UE4SS runs Windows build-time tools such as `proxy_generator.exe` directly. The host must be able to execute Windows PE binaries without an explicit `wine` command. A headless Wine installation is sufficient to build UE4SS.
-
-##### Setup
-
-1. If you have not already done so, clone the repository and initialise its submodules as described in [Build instructions](#build-instructions). Change into the root of the cloned repository (normally `RE-UE4SS/`, containing `CMakeLists.txt`). Run the commands below from that directory.
-
-2. Download and unpack the Microsoft SDK and CRT into the repository's `xwin/` directory (installing the `xwin` executable alone does not install the SDK):
-   ```bash
-   xwin --accept-license splat --output ./xwin
-   ```
-   Both xwin CMake toolchains and `build.sh` find the SDK and CRT there automatically, but if you prefer to store the SDK and CRT elsewhere, set `XWIN_DIR` to that directory before configuring or building, for example `export XWIN_DIR="$HOME/.xwin"`. When set, `XWIN_DIR` overrides the repository-local default.
-
-3.3. Wine must be registered with Linux's `binfmt_misc` mechanism to allow Windows `.exe` files to be executed directly during the build. Your distribution may already have configured this.
-
-   Check with:
-
-   ```bash
-   cat /proc/sys/fs/binfmt_misc/status
-   grep -il '^interpreter .*wine' /proc/sys/fs/binfmt_misc/* 2>/dev/null
-   ```
-
-   You should see a short list including output similar to:
+1. 退出游戏，先安装官方 [UE4SS 正式版 3.0.1](https://github.com/UE4SS-RE/RE-UE4SS/releases/tag/v3.0.1)。本项目按该版本验证。
+2. [下载仓库 ZIP](https://github.com/OthinusG/octopath-traveler-1_autoresolve/archive/refs/heads/main.zip)，解压后将 `mod/OT1AutoResolve` 文件夹复制到：
 
    ```text
-   enabled
-   /proc/sys/fs/binfmt_misc/DOSWin
+   OCTOPATH TRAVELER/Octopath_Traveler/Binaries/Win64/Mods/
    ```
 
-   The handler name may differ between distributions. If `binfmt_misc` is not enabled, or no Wine interpreter is listed, follow the configuration instructions below.
+3. 在现有 `Mods/mods.txt` 中增加一行，保留其他 Mod 条目：
 
-   On most Linux distributions, you can make the Wine registration persistent across reboots using the following procedure. These instructions use `systemd`, which is included in most mainstream Linux distributions. If your distribution uses a different init system, consult its documentation for making `binfmt_misc` registrations persistent.
-
-   ```bash
-   sudo mkdir -p /etc/binfmt.d
-   printf '%s\n' ':DOSWin:M::MZ::/usr/bin/wine:' | sudo tee /etc/binfmt.d/wine.conf
-   sudo systemctl restart systemd-binfmt.service
-   ```
-   Use the actual absolute path to Wine if it is not `/usr/bin/wine`. Distribution packaging and registration may differ. Check the configuration by executing a Windows console `.exe` directly, without prefixing the command with `wine`.
-
-##### Optional: Suppress Wine Diagnostic Output
-
-Wine can produce extensive diagnostic output when running Windows build-time tools, particularly on headless systems. To suppress it for the current shell session:
-
-```bash
-export WINEDEBUG=-all
-```
-
-You can also prefix an individual command (for example, `WINEDEBUG=-all cmake --build build_xwin`), or add the export to your shell startup configuration if you prefer. This setting is optional; unset it when you need Wine diagnostics. The xwin modes of `build.sh` suppress Wine diagnostics automatically.
-
-##### Building Manually with CMake
-
-Run the following commands from the repository root. Select one toolchain and use its own build directory; CMake caches the compiler selection. Both xwin toolchains need `llvm-ml` with `-m64` for the Windows x64 proxy assembly.
-
-```bash
-# Configure with xwin-clang-cl (MSVC-compatible compiler interface)
-cmake -S . -B build_xwin -G Ninja \
-  -DCMAKE_BUILD_TYPE=Game__Shipping__Win64 \
-  -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/xwin-clang-cl-toolchain.cmake \
-  -DCMAKE_ASM_MASM_COMPILER:FILEPATH="$(command -v llvm-ml)" \
-  -DCMAKE_ASM_MASM_FLAGS:STRING=-m64
-
-# Build
-cmake --build build_xwin
-```
-
-Alternatively, use the xwin-clang toolchain (GNU-style compiler interface) in a separate build directory:
-
-```bash
-cmake -S . -B build_xwin_clang -G Ninja \
-  -DCMAKE_BUILD_TYPE=Game__Shipping__Win64 \
-  -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/xwin-clang-toolchain.cmake \
-  -DCMAKE_ASM_MASM_COMPILER:FILEPATH="$(command -v llvm-ml)" \
-  -DCMAKE_ASM_MASM_FLAGS:STRING=-m64
-
-cmake --build build_xwin_clang
-```
-
-##### Building with build.sh Script
-
-The xwin toolchains use `llvm-ml -m64` automatically when building through `build.sh`. Invoke the script with `bash`; executable file permissions are not required. By default it builds only the `UE4SS` target; use `--target all` for the complete build, including the proxy DLL.
-
-```bash
-# Build the complete project with xwin-clang-cl
-bash tools/buildscripts/build.sh --toolchain xwin-clang-cl --target all
-
-# Or build the complete project with xwin-clang
-bash tools/buildscripts/build.sh --toolchain xwin-clang --target all
-
-# Build a specific configuration (UE4SS target by default)
-bash tools/buildscripts/build.sh --toolchain xwin-clang-cl --build-config Game__Debug__Win64
-
-# Clean, full build with verbose output
-bash tools/buildscripts/build.sh --toolchain xwin-clang-cl --target all --clean --verbose
-```
-
-#### Option 2: Cross-Compiling with msvc-wine
-
-**msvc-wine** uses actual MSVC tools running under Wine. This provides maximum compatibility but requires more setup.
-
-##### Prerequisites
-
-- Wine:
-  ```bash
-  # On Ubuntu/Debian
-  sudo apt install wine wine64 winbind
-
-  # On Arch Linux
-  sudo pacman -S wine samba
-  ```
-- [msvc-wine](https://github.com/mstorsjo/msvc-wine) - Follow their installation guide to install MSVC tools
-- Clang (for wine-clang-cl mode) or use MSVC's cl.exe (for wine-msvc mode)
-
-##### Setup
-
-1. Install msvc-wine following the [official instructions](https://github.com/mstorsjo/msvc-wine#installation).
-   By default, this installs to `~/my_msvc/opt/msvc`.
-
-2. Make sure the msvc-wine tools are in your PATH:
-   ```bash
-   export PATH="$HOME/my_msvc/opt/msvc/bin/x64:$PATH"
+   ```text
+   OT1AutoResolve : 1
    ```
 
-3. Set the Wine prefix (optional):
-   ```bash
-   export WINE_PREFIX=~/.wine
-   ```
+4. 启动游戏，进入地图即可生效；按 F6 可以关闭。
 
-##### Building Manually with CMake
+**升级已有安装**：只替换 `OT1AutoResolve/Scripts`，保留自己的 `config.ini`，不要覆盖其他 Mod、加载器或 UE4SS 设置。
 
-```bash
-# Configure with wine-clang-cl toolchain (clang-cl under wine)
-cmake -B build_wine \
-  -G Ninja \
-  -DCMAKE_BUILD_TYPE=Game__Shipping__Win64 \
-  -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/wine-clang-cl-toolchain.cmake
+## 设置
 
-# Or use wine-msvc toolchain (MSVC cl.exe under wine)
-cmake -B build_wine \
-  -G Ninja \
-  -DCMAKE_BUILD_TYPE=Game__Shipping__Win64 \
-  -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/wine-msvc-toolchain.cmake
+配置文件：`Mods/OT1AutoResolve/config.ini`。手动修改后重启游戏。
 
-# Build
-cmake --build build_wine
+```ini
+[AutoResolve]
+Enabled=1
+ToggleKey=F6
+LevelMargin=1
+ShowUI=1
 ```
 
-##### Building with build.sh Script
+| 设置 | 含义 |
+| --- | --- |
+| `Enabled` | 1 开启、0 关闭；F6 会保存此值 |
+| `ToggleKey` | F1–F24；`None` 禁用快捷键 |
+| `LevelMargin` | 等级差，0–99；默认 1，0 允许同等级结算 |
+| `ShowUI` | 1 显示奖励提示，0 隐藏 |
 
-```bash
-# Build with wine-clang-cl
-bash tools/buildscripts/build.sh --toolchain wine-clang-cl
+Mod 不主动保存游戏。原生接口不可用时保留正常战斗；奖励写入异常会停止后续自动结算，错误记录在 `Win64/UE4SS.log`。
 
-# Or build with wine-msvc
-bash tools/buildscripts/build.sh --toolchain wine-msvc
+## 验证与范围
 
-# Build specific configuration
-bash tools/buildscripts/build.sh --toolchain wine-clang-cl --build-config Game__Debug__Win64
+49 项 Lua 测试通过，覆盖遇敌保护、门槛、奖励加成叠加、倒下与满级角色、背包容量、界面语言和 F6 持久化。原生接口检查及 0.1.3 冷启动通过；早期核心版本完成过 11 次实际暗雷结算验证。
+
+**0.1.3 的加成／倒下队伍组合、残血角色升级恢复，以及成就实际解锁仍未完成完整实机验证。** Boss／剧情保护已做源码和模拟测试，未逐场推进所有受保护战斗。详见[验证范围](docs/VALIDATION.md)。
+
+不模拟破防、一回合、无伤等战斗表现奖励、战斗中产生的额外倍率、偷窃、捕获或后期稀有猫替换；不添加首次怪物发现记录，也不执行战斗内超上限血蓝的收尾清理。
+
+## 源码与打包
+
+日常测试和打包不需要游戏资源：数值目录 `catalog.lua` 已随源码提交。
+
+```sh
+# Lua 5.4+
+lua tests/test_mod.lua "$PWD"
+
+# Python 3.9+，仅使用标准库
+python3 tools/package_mod.py
 ```
 
-#### Build Output
+输出：`dist/OT1AutoResolve-0.1.3-mod-only.zip` 和 SHA256 校验文件。可选的数值目录重新生成流程见[开发说明](docs/DEVELOPMENT.md)。
 
-Cross-compiled binaries will be in the chosen build directory under `<BuildMode>/bin/`. For example, the manual `xwin-clang-cl` build produces:
-```
-build_xwin/
-└── Game__Shipping__Win64/
-    └── bin/
-        ├── UE4SS.dll
-        ├── dwmapi.dll  (proxy DLL)
-        └── ... (other files)
-```
-
-The `build.sh --toolchain xwin-clang-cl` example instead uses `build_xwin-clang-cl_Game__Shipping__Win64/`.
-
-### Debugging Under Wine
-
-When using wine-based toolchains, you can debug crashes and issues using Wine's debugger.
-
-#### Using winedbg
-
-```bash
-# Debug a running program
-winedbg ./path/to/game.exe
-
-# Debug a crash dump
-winedbg crash_2024_12_26_07_39_15.dmp
+```text
+mod/OT1AutoResolve/   Mod 源码与默认配置
+mod/README.md        中文使用说明
+tests/               可独立运行的 Lua 测试
+tools/               打包与可选目录生成工具
+docs/                开发与验证说明
+LICENSES/            上游许可证说明
 ```
 
-#### Important Notes for Debugging
+## 卸载
 
-- Debug symbols (.pdb files) are **not** stored in minidump files
-- You **must** have the exact same .pdb file that corresponds to the .dll that crashed
-- The easiest way to ensure matching symbols:
-  1. Note the git commit hash when you built UE4SS
-  2. When debugging a crash, checkout that exact commit
-  3. Rebuild to generate matching .pdb files
-  4. Then debug the minidump
+退出游戏，删除 `Mods/OT1AutoResolve`，并移除 `Mods/mods.txt` 中的对应条目。其他 Mod 仍需要 UE4SS 时保留加载器。
 
-#### Tips
+## 来源与许可证
 
-- If you encounter "access denied" errors, ensure you have `winbind` or `samba` installed
-- PDB files are generated in the same directory as the DLL files
+本项目参考 OT2AutoResolve 与 FFRS AutoResolve v1.0.1 的交互和逻辑，并针对 OT1 验证接口与数据。仓库由 UE4SS fork 整理而来，保留上游历史和[原 MIT 许可证说明](LICENSES/UE4SS-MIT.txt)；本 Mod 源码尚未单独选择开源许可证。参见 [NOTICE](NOTICE.md)。
 
-## Updating git submodules
-
-If you want to update git submodules, you do so one of three ways:
-1. You can execute `git submodule update --init --recursive` to update all submodules.
-2. You can also choose to update submodules one by one, by executing `git submodule update --init --recursive deps/<first-or-third>/<Repo>`.
-    Do not use the `--remote` option unless you actually want to update to the latest commit.
-3. If you would rather pick a specific commit or branch to update a submodule to then `cd` into the submodule directory for that dependency and execute `git checkout <branch name or commit>`.
-The main dependency you might want to update from time to time is `deps/first/Unreal`.
-## Credits
-
-All contributors since the project became open source: https://github.com/UE4SS-RE/RE-UE4SS/graphs/contributors
-
-
-- **Original Creator** The original creator no longer wishes to be involved in or connected to  this project.  Please respect their wishes, and avoid using their past usernames in connection with this project.
-- [**Archengius**](https://github.com/Archengius/)
-  - UHT compatible header generator
-- **CasualGamer**
-  - Injector code & aob scanner is heavily based on his work, 90% of that code is his.
-- **SunBeam**
-  - Extra signature for function 'GetFullName' for UE4.25.
-  - Regex to check for proper signature format when loaded from ini.
-  - Lots and lots of work on signatures
-- **tomsa**
-  - const char* to vector\<int> converter
-    - tomsa: Idea & most of the code
-    - Original Creator: Nibblet support
-- **boop** / **usize**
-  - New UFunction hook method
-- [**RussellJ**](https://github.com/RussellJerome)
-  - Blueprint Modloader inspiration
-- [**Narknon**](https://github.com/narknon)
-  - Certain features and maintenance/rehosting of the project
-- **DeadMor0z**
-  - Certain features and Lua updates/maintenance
-- [**OutTheShade**](https://github.com/OutTheShade/UnrealMappingsDumper)
-  - Unreal Mappings (USMAP) Generator
-- **DmgVol**
-  - Inspiration for map dumper
-- [**Buckminsterfullerene**](https://github.com/Buckminsterfullerene02/)
-  - Rewriting the documentation, various fixes
-- **trumank**
-  - Lua bindings generator, various fixes, automation & improvements
-- **localcc**
-  - C++ API
-
-## Thanks to everyone who helped with testing
-
-- GreenHouse
-- Otis_Inf
-- SunBeam
-- Motoson
-- hooter
-- Synopis
-- Buckminsterfullerene
-
-### Supported by
-[![JetBrains logo.](https://resources.jetbrains.com/storage/products/company/brand/logos/jetbrains.svg)](https://jb.gg/OpenSource)
+仓库不包含游戏原始资源、SDK／蓝图提取文件、存档或 UE4SS 二进制。本项目是非官方 Mod，与游戏发行方无关联。
