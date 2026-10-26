@@ -15,3 +15,4 @@
 - The site uses fixed v0.1.3 facts from repository documentation. GitHub Pages deploys from `main` through `.github/workflows/pages.yml`; review the workflow before merging, enable workflow-based Pages if needed, and verify the public response after deployment.
 
 - The user rejected a separate /ot1ar/ hosting repository: keep the existing repository and its project Pages URL. Implementation was delegated through Warpai, returned for issuer review without progress polling, and accepted after code/visual review and independent Lua/package checks. Detailed task instructions are retained in docs/tasks/pages-website-handoff.md.
+- Pages was enabled with workflow-based builds and deployed successfully from main on 2026-10-26 (Actions run 40290283595). Public HTML/CSS/favicon returned HTTP 200 and matched reviewed source bytes. Issuer browser review at 1440/390/320px passed layout, anchor, FAQ and mobile navigation checks; the existing Mod CI passed.
