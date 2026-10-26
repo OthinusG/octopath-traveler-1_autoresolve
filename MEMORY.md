@@ -13,3 +13,5 @@
 - Published v0.1.3 from commit `9ea60963e3afc274d79e801b998396e9aa256024` on 2026-10-26 with a mod-only ZIP and SHA-256 release asset; downloaded assets passed checksum verification, and the 49 portable tests and Lua syntax checks passed.
 - The product documentation site is a native static page in `docs/site/`, published at the repository Pages subpath `/octopath-traveler-1_autoresolve/`; keep local URLs relative to that base and publish only `docs/site` as the Pages artifact.
 - The site uses fixed v0.1.3 facts from repository documentation. GitHub Pages deploys from `main` through `.github/workflows/pages.yml`; review the workflow before merging, enable workflow-based Pages if needed, and verify the public response after deployment.
+
+- The user rejected a separate /ot1ar/ hosting repository: keep the existing repository and its project Pages URL. Implementation was delegated through Warpai, returned for issuer review without progress polling, and accepted after code/visual review and independent Lua/package checks. Detailed task instructions are retained in docs/tasks/pages-website-handoff.md.

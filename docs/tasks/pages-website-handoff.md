@@ -1,0 +1,65 @@
+# OT1 Auto Resolve website implementation and review handoff
+
+## Objective and authority
+Build a Chinese-first, responsive product documentation website for the existing repository https://github.com/OthinusG/octopath-traveler-1_autoresolve. Use GitHub Pages at https://othinusg.github.io/octopath-traveler-1_autoresolve/. The user explicitly corrected the initial address: do not create another repository, rename this repository, add a custom domain, or use /ot1ar/.
+
+The user requests implementation by another online Codex through Warpai MCP, followed by an unsolicited completion/review instruction to the issuer. Do not require the issuer to poll your progress. Complete implementation, evidence and submission; the issuer reviews and handles final integration/push/deployment. Do not independently publish before review.
+
+## Ownership and scope
+Work in your own isolated checkout/branch created from the existing repository HEAD; do not edit the issuer's checkout. First inspect git status, remotes and current HEAD. Source baseline observed by issuer: 9ea60963e3afc274d79e801b998396e9aa256024; verify against current main before editing. Preserve all unrelated changes. The issuer has a local, uncommitted MEMORY.md release note: preserve it and include equivalent release context in your memory update without copying over the file wholesale.
+
+Allowed scope: docs/site/** (editable HTML/CSS, minimal JS and assets), docs/PRD.md, docs/Tech-Spec.md (or focused existing equivalents), docs/tasks/**, .github/workflows/pages.yml, relevant README website link, and a focused MEMORY.md addition. Keep mod Lua, configs, catalogue, tests and packaging behavior unchanged. No backend, login, payment, analytics, dependency framework or live GitHub API fetching. Prefer native HTML/CSS and minimal JS, using existing installed browser tools for verification. Read AGENTS.md, README.md, MEMORY.md and docs/DEVELOPMENT.md before changes. Read and use karpathy-guidelines, ponytail and ui-design-handoff-fidelity skills. If .codegraph exists, follow project code search rules. Never read credential files or .env; use existing gh authentication.
+
+## Step 1: specify before implementation
+Write focused PRD and technical spec covering audience (Windows OT1 players), goal (understand eligibility, download, install, configure, troubleshoot), sections, responsive states, exact hosting base path, visual source, risks, tasks and acceptance checks. No API contract is necessary for a static site without an API. Record representative fixed v0.1.3 content before UI coding.
+
+## Step 2: inspect and lock the visual reference
+Authoritative style reference: https://www.xxexpand.com/g/palworld/mods/stack-light?pageSize=24 . Render the real full page in a browser, inspect at desktop and mobile widths, and capture screenshots. The issuer verified HTTP 200 but web extraction could not render this SPA; fetching the 2880-byte HTML shell is not visual inspection. Use Playwright/CDP or an available browser. Do not copy executable bundles, branding, logos, unrelated game images, or text from the reference.
+
+Record actual reference tokens and structure in the spec: container width/grid, background/surface/text/accent colors, type scale and fallback fonts, spacing, borders/radii/shadows, header, detail-page hierarchy, main/sidebar relationship, download action and section navigation. The reference has theme switching/automatic theme code; inspect actual appearance and select one coherent reference theme, explicitly recording that choice. Use the reference's visual language and adapt the content, rather than cloning a generic landing page. User authorizes deleting irrelevant elements: remove marketplace/global game catalog/search, shopping cart, account/login, payments/prices, ratings/download counters without verified data, comments, ads and unrelated recommendations. Keep the useful mod-detail hierarchy, version/compatibility metadata, prominent download action, readable sections and compact navigation. Document deliberate simplifications.
+
+If no browser can render the reference, report the specific blocker and request needed reference evidence through MCP; do not invent a visual match. Do not use a screenshot as the final website. Real gameplay images are not available in the repository baseline; do not invent gameplay screenshots, scrape game assets, use unrelated stock photos, or leave placeholders. Native text/CSS is sufficient if the reference-derived asset treatment is recorded as an intentional omission.
+
+## Step 3: implement static content faithfully
+Use fixed, source-grounded content from README.md, mod/README.md, docs/VALIDATION.md and release v0.1.3. Suggested sections: introduction/benefit, compatibility and version, core features, eligibility formula, installation, settings, upgrade/uninstall, validation and FAQ/troubleshooting, project/source links.
+
+Required facts:
+- Windows Steam build 5272616; official UE4SS 3.0.1 must be installed separately. No loader is bundled.
+- Version 0.1.3. Primary ZIP: https://github.com/OthinusG/octopath-traveler-1_autoresolve/releases/download/v0.1.3/OT1AutoResolve-0.1.3-mod-only.zip . Release: https://github.com/OthinusG/octopath-traveler-1_autoresolve/releases/tag/v0.1.3 . Checksum: same download path ending .zip.sha256 . Verify these links still exist.
+- Only ordinary movement-triggered random encounters qualify. Highest active-party level >= max(area danger level, selected enemy-group maximum level) + LevelMargin; default margin 1. Boss/story/fixed/duel/summon/unknown encounters retain normal combat.
+- EXP, JP, leaves and probability drops; supported static party passives and EXP/JP accessories follow native additive rules and truncation. Inventory capacity applies. Knocked-out members get no EXP/JP/healing; living max-level members retain JP. True level-ups recover that character's HP/MP. Money invokes native cumulative-money achievement interface; do not claim actual achievement unlocking was fully tested.
+- F6 toggles and persists enabled state. Notifications follow UI language, not voice; simplified/traditional Chinese and English fallback.
+- ZIP layout is Win64/Mods/OT1AutoResolve. Copy this folder into Octopath_Traveler/Binaries/Win64/Mods/, then add OT1AutoResolve : 1 to existing Mods/mods.txt, preserving other entries. Distinguish release ZIP installation from source archive installation; do not tell release ZIP users to find mod/OT1AutoResolve inside it.
+- Upgrades replace Scripts only and retain config.ini. Settings: Enabled=1, ToggleKey=F6 (F1-F24 or None), LevelMargin=1 (0-99), ShowUI=1. Config edits require restart.
+- Mod does not actively save the game. Missing native interfaces retain normal combat; reward write failures stop subsequent auto-resolve and are recorded in Win64/UE4SS.log.
+- No simulated combat-performance bonuses, stealing/capture, first-species discovery, late rare-cat substitution, or combat-only over-limit cleanup.
+- 49 portable Lua tests passed; native getter checks and v0.1.3 cold start passed. Earlier core version had 11 real encounter resolutions. Full v0.1.3 boosted/knocked-out combinations, low-HP level-up recovery and actual achievement unlocking remain incompletely verified. Link validation details and describe these accurately without drowning primary installation guidance in warnings.
+- Unofficial mod; mod source has no separately chosen license. Preserve notices; do not label this MIT licensed merely because upstream UE4SS has MIT notice.
+
+Create semantic native content with Chinese UI copy, English filenames/code/comments/technical docs. Download is an ordinary working anchor, not a fake CTA. If copy buttons or mobile navigation are added, implement keyboard/focus behavior, clear success/failure status and graceful fallback. Native details/summary is suitable for FAQs. No dead controls or fabricated usage data. Do not add unnecessary animation or options.
+
+## Step 4: static fidelity checkpoint and interactions
+First render the fixed-content static layout and inspect reference and implementation screenshots in the same QA pass. Fix clipping, overlap, spacing/typography/colors, image treatment and CTA visibility before enabling optional interactions. Then test every actual interaction and capture affected states. No real-data integration is needed for this site; keep version metadata static and explicit. Avoid extracting abstractions or introducing a build system for one page.
+
+Required widths: 1440 and 390 pixels; also check 320 pixels for horizontal overflow, long filesystem paths and code blocks. Inspect the full page, not only the first screen. Check sticky header/sidebar does not obscure section anchors or mobile primary actions; mobile navigation has accessible controls; focus is visible; headings and links are meaningful; text contrast is readable; reduced-motion preference is respected if motion exists. Code blocks may scroll internally without making the entire page overflow.
+
+Maintain docs/site QA evidence outside the deployed public artifact where practical: screenshots and a concise fidelity ledger recording at least five comparisons (layout, typography, palette, spacing, content/assets, responsiveness), reference evidence, implementation evidence and fixes/intentional deviations. No placeholder text, fake screenshots, debug artifacts or giant third-party assets in deployment.
+
+## Step 5: prepare Pages deployment in this repository
+Create a minimal GitHub Actions workflow consistent with existing pinned-action conventions. Use checkout, configure-pages, upload-pages-artifact and deploy-pages with appropriate contents:read/pages:write/id-token:write permissions, deployment environment github-pages, a single concurrency group and artifact path docs/site. Prefer workflow_dispatch only for the initial reviewable setup; record whether subsequent main pushes should trigger deployment and choose the smallest maintainable behavior explicitly in the spec. Do not disturb the existing Validate mod workflow or expand packaging to include the site.
+
+All URLs/resources must work at /octopath-traveler-1_autoresolve/: use relative asset links, correct canonical/OG URL, correct section anchors, and no root-relative /assets paths. This is a project Pages path, not a custom domain; do not create CNAME. Public site content must not include private checkout paths or task/MCP IDs.
+
+Issuer will enable Pages build_type=workflow via gh if needed after review and push the reviewed commit, run workflow, then verify deployed HTTP responses. Provide exact commands and any permission blockers without asking for secrets or adding PATs. Never overwrite an existing Pages configuration without inspecting it first. The issuer observed Pages GET 404, but you must distinguish unconfigured Pages from permission failures when executing.
+
+## Step 6: verify before submission
+Run existing mandated checks: lua tests/test_mod.lua "$PWD" and python3 tools/package_mod.py; Lua syntax checks only if any Lua changed (none should). Serve the site locally under the actual project prefix, not only at /. Use available browser automation to check desktop/mobile screenshot QA, all local assets and anchors, no browser console errors, no global horizontal overflow, and every primary link/copy/navigation behavior. Validate YAML with an installed tool or strongest available static review. Avoid adding a new dependency solely for these checks.
+
+Check external release ZIP/checksum/UE4SS/source links. Record test outcomes and browser tooling used. Do not claim full in-game verification. Review git diff for accidental mod changes, secrets, forbidden assets and unrelated formatting. Update MEMORY.md with durable site architecture/base-path/deployment decisions, and preserve existing release context. Commit scoped work in your own branch; return base/head SHAs and evidence paths. Do not force-push, merge main, create another repository or deploy before issuer review.
+
+## Completion contract: push-driven review, no polling
+Use the tracked Warpai task lifecycle: start the assigned revision, reserve edited files, capture evidence, propose durable typed memory as required by MCP, and submit the task result. The designated reviewer is the issuer. On completion, send the issuer a result-bearing MCP message referencing this task with the explicit instruction:
+
+“实现和自测已完成，请开始审查 OT1 GitHub Pages 说明页；按返回的 branch/head、截图证据和验收清单审查，通过后集成并部署到 https://othinusg.github.io/octopath-traveler-1_autoresolve/。”
+
+Include checkout/branch, base/head SHAs, changed files, checks passed/failed, screenshot/fidelity-ledger locations, deployment instructions, and precise unresolved blockers. For a real blocker, ask a durable MCP question or return a blocked result, never mark the task complete. Informational progress is allowed but the issuer will not poll during execution. After submission/reply call warp_agent_ready as required so the issuer receives the completion notification. User-facing communication is Chinese; repository technical docs and commits are English.
