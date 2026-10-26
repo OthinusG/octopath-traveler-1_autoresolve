@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/OthinusG/octopath-traveler-1_autoresolve/main/docs/site/assets/octopath-logo.png" alt="Octopath Traveler" width="96" height="96">
+
 # 八方旅人 1 · 等级压制自动结算
 
 [网页说明](https://othinusg.github.io/octopath-traveler-1_autoresolve/) · [English](README.en.md) · [使用说明](mod/README.md) · [验证记录](docs/VALIDATION.md)
@@ -5,6 +7,8 @@
 基于 **UE4SS 3.0.1** 的《八方旅人 1》Mod：队伍等级明显高于普通暗雷敌人时，跳过战斗转场，直接获得奖励。
 
 适配目标：**Windows Steam build 5272616**。当前版本：**0.1.3**。
+
+![游戏内截图：中文界面的自动结算奖励提示](https://raw.githubusercontent.com/OthinusG/octopath-traveler-1_autoresolve/main/docs/site/assets/gameplay-zh.webp)
 
 ## 实现效果
 

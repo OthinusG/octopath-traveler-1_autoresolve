@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/OthinusG/octopath-traveler-1_autoresolve/main/docs/site/assets/octopath-logo.png" alt="Octopath Traveler" width="96" height="96">
+
 # OT1 Auto Resolve
 
 [简体中文](README.md)
@@ -12,6 +14,8 @@ Resolve eligible over-levelled ordinary walking encounters before combat and gra
 - Level-ups refill that member's HP/MP. Earned leaves update the native cumulative-money achievement record.
 - Notifications follow the text language: Simplified/Traditional Chinese, English for everything else. Voice settings are independent.
 - No combat-performance bonuses, stealing/capture rewards, rare-cat substitution, first-species tracking or battle-only over-limit cleanup.
+
+![In-game screenshot: automatic encounter rewards in the English interface](https://raw.githubusercontent.com/OthinusG/octopath-traveler-1_autoresolve/main/docs/site/assets/gameplay-en.webp)
 
 ## Install
 
