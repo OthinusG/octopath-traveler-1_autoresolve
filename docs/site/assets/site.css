@@ -69,6 +69,9 @@ h1 { margin: 0; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.25; letter-s
 .download-links { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 16px; margin-top: 12px; }
 .download-links a { font-size: 12px; }
 .loader-note { margin: 12px 0 0; color: var(--muted); font-size: 12px; }
+.gameplay-preview { margin: 16px 0 0; overflow: hidden; }
+.gameplay-preview img { display: block; width: 100%; height: auto; }
+.gameplay-preview figcaption { padding: 9px 14px; color: var(--muted); font-size: 12px; }
 
 .mobile-toc { display: none; }
 .content-grid { display: grid; grid-template-columns: minmax(0, 2.25fr) minmax(240px, .95fr); gap: 28px; align-items: start; margin-top: 24px; }
