@@ -38,7 +38,8 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #7a9bd1; outline-off
 .site-header { background: var(--surface); border-bottom: 1px solid var(--line); }
 .header-inner { width: min(1052px, calc(100% - 40px)); min-height: 64px; margin: auto; display: flex; align-items: center; gap: 32px; }
 .brand { display: inline-flex; align-items: center; gap: 9px; color: var(--text); font-size: 16px; font-weight: 750; text-decoration: none; white-space: nowrap; }
-.brand-mark { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #e2ad1b; border-radius: 10px; background: #fff6d9; color: #775800; font-size: 12px; font-weight: 800; letter-spacing: -.04em; }
+.brand-mark { display: block; width: 48px; height: 48px; object-fit: contain; border-radius: 20%; }
+.hero-logo { display: block; width: 112px; max-width: 100%; height: auto; margin-bottom: 12px; border-radius: 20%; }
 .header-links { display: flex; align-items: center; gap: 25px; margin-left: auto; }
 .header-links a { color: #515a69; font-size: 14px; text-decoration: none; }
 .language-switch { display: flex; align-items: center; gap: 9px; white-space: nowrap; font-size: 12px; }
@@ -131,7 +132,8 @@ pre code { overflow-wrap: normal; white-space: pre; }
   body { font-size: 14px; }
   .header-inner { width: min(100% - 28px, 600px); min-height: 58px; gap: 12px; }
   .brand { gap: 7px; font-size: 14px; }
-  .brand-mark { width: 31px; height: 31px; }
+  .brand-mark { width: 40px; height: 40px; }
+  .brand-name { display: none; }
   .header-links { display: none; }
   .language-switch { margin-left: auto; gap: 8px; }
   .header-download { margin-left: 0; padding: 7px 9px; font-size: 12px; }

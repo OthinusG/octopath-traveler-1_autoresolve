@@ -43,3 +43,7 @@ Use a single workflow with `workflow_dispatch` and pushes to `main` when `docs/s
 - Do not report the website deployed or claim broader in-game acceptance.
 
 Screenshot layout acceptance: both locales at 1440/390/320px must keep the full image inside the overview card content bounds, preserve its natural aspect ratio, and avoid page overflow. Version the stylesheet link when changing screenshot layout so returning visitors load the matching CSS.
+
+## Website branding
+
+Use the user-supplied rounded-square OCTOPATH TRAVELER mark with the mobile-game subtitle removed for the header brand, hero title artwork and favicon on both languages. Keep localized mod titles as selectable text and retain the unofficial-mod label. Constrain artwork dimensions and preserve its ratio; check both locales at 1440/390/320px so language switching and download remain usable. Share one optimized logo asset and remove the replaced placeholder favicon. Do not change game logic or release packaging.
