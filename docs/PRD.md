@@ -2,7 +2,7 @@
 
 ## Product
 
-A Chinese-first product detail and documentation page for the unofficial Octopath Traveler I Auto Resolve mod. The audience is Windows players who need to decide whether the mod fits their game, install the required loader and mod, configure it safely, and diagnose common issues.
+A bilingual product detail and documentation page for the unofficial Octopath Traveler I Auto Resolve mod. English is the default at the existing Pages root URL; Simplified Chinese remains available at `zh.html`. The audience is Windows players who need to decide whether the mod fits their game, install the required loader and mod, configure it safely, and diagnose common issues.
 
 ## Goal and user path
 
@@ -28,6 +28,10 @@ No game image, logo, font, or unrelated artwork is available or authorized for r
 ## Acceptance criteria
 
 - Hosted at `https://othinusg.github.io/octopath-traveler-1_autoresolve/`; relative asset paths work under the repository subpath.
+- The root document is English (`lang="en"`) regardless of browser locale. `zh.html` is complete Simplified Chinese (`lang="zh-CN"`); each page links directly to the other without scripts, redirects, or stored locale state.
+- Both pages expose an accessible, visible top-right language switch on desktop and at 320px, with the active language identified and keyboard focus visible.
+- Each locale has localized title/description/Open Graph metadata, a self canonical URL under the Pages project prefix, and alternate `en`, `zh-CN`, and `x-default` links.
+- Both pages retain matching section IDs, feature/config facts, primary and supporting links, and complete information parity.
 - Native static HTML/CSS with only minimal JavaScript if a necessary interaction cannot use platform HTML.
 - Required v0.1.3 behavior, compatibility, install/upgrade, settings, troubleshooting, and validation facts are accurate and linked to project sources.
 - No dead controls, placeholders, game artwork, fabricated usage data, private paths, or secrets.

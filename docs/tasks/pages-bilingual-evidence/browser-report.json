@@ -1,0 +1,386 @@
+{
+  "base": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+  "locale": "zh-CN",
+  "screenshots": [
+    "en-desktop-1440.png",
+    "en-mobile-390.png",
+    "en-mobile-320.png",
+    "zh-desktop-1440.png",
+    "zh-mobile-390.png",
+    "zh-mobile-320.png"
+  ],
+  "pages": [
+    {
+      "lang": "en",
+      "title": "OT1 Auto Resolve · Automatic Encounter Resolution",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "viewport": 1440,
+      "documentWidth": 1425,
+      "overflow": [],
+      "brokenAnchors": [],
+      "switches": [
+        {
+          "label": "English",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+          "current": "page",
+          "visible": true
+        },
+        {
+          "label": "中文",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+          "current": null,
+          "visible": true
+        }
+      ],
+      "switchVisible": true,
+      "downloadVisible": true,
+      "downloadRect": {
+        "x": 1091.015625,
+        "y": 11.953125,
+        "width": 147.484375,
+        "height": 40.09375
+      },
+      "switchRect": {
+        "x": 981.359375,
+        "y": 21.796875,
+        "width": 77.65625,
+        "height": 20.390625
+      },
+      "style": true
+    },
+    {
+      "lang": "en",
+      "title": "OT1 Auto Resolve · Automatic Encounter Resolution",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": [],
+      "brokenAnchors": [],
+      "switches": [
+        {
+          "label": "English",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+          "current": "page",
+          "visible": true
+        },
+        {
+          "label": "中文",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+          "current": null,
+          "visible": true
+        }
+      ],
+      "switchVisible": true,
+      "downloadVisible": true,
+      "downloadRect": {
+        "x": 244.515625,
+        "y": 10.796875,
+        "width": 131.484375,
+        "height": 36.390625
+      },
+      "switchRect": {
+        "x": 155.859375,
+        "y": 18.796875,
+        "width": 76.65625,
+        "height": 20.390625
+      },
+      "style": true
+    },
+    {
+      "lang": "en",
+      "title": "OT1 Auto Resolve · Automatic Encounter Resolution",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": [],
+      "brokenAnchors": [],
+      "switches": [
+        {
+          "label": "English",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+          "current": "page",
+          "visible": true
+        },
+        {
+          "label": "中文",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+          "current": null,
+          "visible": true
+        }
+      ],
+      "switchVisible": true,
+      "downloadVisible": true,
+      "downloadRect": {
+        "x": 190.703125,
+        "y": 43,
+        "width": 119.296875,
+        "height": 32.6875
+      },
+      "switchRect": {
+        "x": 233.34375,
+        "y": 12.296875,
+        "width": 76.65625,
+        "height": 20.390625
+      },
+      "style": true
+    },
+    {
+      "lang": "zh-CN",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "viewport": 1440,
+      "documentWidth": 1425,
+      "overflow": [],
+      "brokenAnchors": [],
+      "switches": [
+        {
+          "label": "English",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+          "current": null,
+          "visible": true
+        },
+        {
+          "label": "中文",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+          "current": "page",
+          "visible": true
+        }
+      ],
+      "switchVisible": true,
+      "downloadVisible": true,
+      "downloadRect": {
+        "x": 1129.09375,
+        "y": 11.953125,
+        "width": 109.40625,
+        "height": 40.09375
+      },
+      "switchRect": {
+        "x": 1023.28125,
+        "y": 21.796875,
+        "width": 73.8125,
+        "height": 20.390625
+      },
+      "style": true
+    },
+    {
+      "lang": "zh-CN",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "viewport": 390,
+      "documentWidth": 390,
+      "overflow": [],
+      "brokenAnchors": [],
+      "switches": [
+        {
+          "label": "English",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+          "current": null,
+          "visible": true
+        },
+        {
+          "label": "中文",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+          "current": "page",
+          "visible": true
+        }
+      ],
+      "switchVisible": true,
+      "downloadVisible": true,
+      "downloadRect": {
+        "x": 280.21875,
+        "y": 10.796875,
+        "width": 95.78125,
+        "height": 36.390625
+      },
+      "switchRect": {
+        "x": 195.40625,
+        "y": 18.796875,
+        "width": 72.8125,
+        "height": 20.390625
+      },
+      "style": true
+    },
+    {
+      "lang": "zh-CN",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "viewport": 320,
+      "documentWidth": 320,
+      "overflow": [],
+      "brokenAnchors": [],
+      "switches": [
+        {
+          "label": "English",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+          "current": null,
+          "visible": true
+        },
+        {
+          "label": "中文",
+          "href": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+          "current": "page",
+          "visible": true
+        }
+      ],
+      "switchVisible": true,
+      "downloadVisible": true,
+      "downloadRect": {
+        "x": 223.953125,
+        "y": 12.65625,
+        "width": 86.046875,
+        "height": 32.6875
+      },
+      "switchRect": {
+        "x": 142.0625,
+        "y": 18.796875,
+        "width": 72.8125,
+        "height": 20.390625
+      },
+      "style": true
+    }
+  ],
+  "interaction": {
+    "zhDirect": {
+      "lang": "zh-CN",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html"
+    },
+    "zhReload": {
+      "lang": "zh-CN",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html"
+    },
+    "zhToEn": {
+      "lang": "en",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/"
+    },
+    "enToZh": {
+      "lang": "zh-CN",
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html"
+    },
+    "noJsen": {
+      "lang": "en",
+      "title": "OT1 Auto Resolve · Automatic Encounter Resolution",
+      "body": 4611
+    },
+    "noJszh": {
+      "lang": "zh-CN",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "body": 1979
+    },
+    "keyboardFocus": {
+      "focused": "brand link",
+      "focusVisible": true,
+      "outline": "solid 3px"
+    },
+    "mobileTocOpens": true,
+    "mobileSectionNavigationWorks": true,
+    "faqDisclosureOpens": true
+  },
+  "errors": [],
+  "failures": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/favicon.svg",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/zh.html",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8766/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    }
+  ]
+}

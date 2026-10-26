@@ -2,14 +2,21 @@
 
 ## Runtime and hosting
 
-- Static site root: `docs/site/`; no build system, framework, runtime API, analytics, or added dependency.
+- Static site root: `docs/site/`; English is served from `index.html` and Simplified Chinese from `zh.html`. No build system, framework, runtime API, analytics, or added dependency.
 - Host: GitHub Pages project site at `https://othinusg.github.io/octopath-traveler-1_autoresolve/`.
-- Use document-relative links for local assets and anchors. Canonical and Open Graph URLs include the project base path. Never use root-relative local assets.
-- `docs/site/` is the only Pages artifact. QA screenshots and the fidelity ledger remain under `docs/tasks/pages-website-evidence/`.
+- Use document-relative links for local assets, language switch, and anchors. Canonical and Open Graph URLs include the project base path. Never use root-relative local assets.
+- `docs/site/` is the only Pages artifact. Bilingual screenshots and the fidelity ledger remain under `docs/tasks/pages-bilingual-evidence/`.
+
+## Language routes
+
+- `index.html` is the fixed English default at the project root; `zh.html` is the complete Simplified Chinese page. Browser locale never changes the root document.
+- Both pages link to each other with ordinary relative URLs and share `assets/site.css` and the favicon. No JavaScript, locale redirect, storage, or dependency is used.
+- Keep section IDs and information parity aligned across pages. Each document has localized language and social metadata, a self canonical URL under `/octopath-traveler-1_autoresolve/`, and alternate `en`, `zh-CN`, and `x-default` links.
+- Keep an accessible English/中文 switch in the top-right header on desktop and mobile. Mark the current language, preserve focus indication, and ensure it remains visible at 320px without obscuring branding or download.
 
 ## Page structure
 
-One semantic HTML page: header, breadcrumb, product hero, article with anchored sections, desktop compatibility/navigation aside, and small footer. A native `<details>` disclosure presents the section links on mobile. No client-side data fetching or content integration is required; version and release facts are fixed to v0.1.3.
+Two semantically equivalent HTML pages: header, breadcrumb, product hero, article with anchored sections, desktop compatibility/navigation aside, and small footer. A native `<details>` disclosure presents the section links on mobile. No client-side data fetching or content integration is required; version and release facts are fixed to v0.1.3.
 
 The ZIP anchor targets the published mod-only release asset. Adjacent links target the release notes and SHA-256 sidecar. Installation distinguishes the release archive layout (`Win64/Mods/OT1AutoResolve`) from source checkout layout. FAQ uses native `<details>/<summary>`.
 

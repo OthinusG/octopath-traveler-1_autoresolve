@@ -41,6 +41,9 @@ a:focus-visible, summary:focus-visible { outline: 3px solid #7a9bd1; outline-off
 .brand-mark { display: grid; width: 34px; height: 34px; place-items: center; border: 1px solid #e2ad1b; border-radius: 10px; background: #fff6d9; color: #775800; font-size: 12px; font-weight: 800; letter-spacing: -.04em; }
 .header-links { display: flex; align-items: center; gap: 25px; margin-left: auto; }
 .header-links a { color: #515a69; font-size: 14px; text-decoration: none; }
+.language-switch { display: flex; align-items: center; gap: 9px; white-space: nowrap; font-size: 12px; }
+.language-switch a { color: #596577; text-decoration: none; }
+.language-switch [aria-current="page"] { color: #20242d; font-weight: 750; text-decoration: underline; text-underline-offset: 4px; }
 .header-download { padding: 8px 13px; border: 1px solid #e7b922; border-radius: 8px; background: #fff9e7; color: #664d00; font-size: 13px; font-weight: 700; text-decoration: none; white-space: nowrap; }
 .header-download:hover { background: #fff2c5; color: #4c3900; }
 
@@ -127,7 +130,8 @@ pre code { overflow-wrap: normal; white-space: pre; }
   .brand { gap: 7px; font-size: 14px; }
   .brand-mark { width: 31px; height: 31px; }
   .header-links { display: none; }
-  .header-download { margin-left: auto; padding: 7px 9px; font-size: 12px; }
+  .language-switch { margin-left: auto; gap: 8px; }
+  .header-download { margin-left: 0; padding: 7px 9px; font-size: 12px; }
   .page-shell { width: min(100% - 28px, 600px); margin: 16px auto 40px; }
   .breadcrumb { margin-bottom: 11px; }
   .hero { grid-template-columns: minmax(0, 1fr); gap: 19px; padding: 20px; }
@@ -152,9 +156,9 @@ pre code { overflow-wrap: normal; white-space: pre; }
 }
 
 @media (max-width: 360px) {
-  .header-inner { width: calc(100% - 20px); }
+  .header-inner { width: calc(100% - 20px); flex-wrap: wrap; column-gap: 8px; row-gap: 5px; padding: 7px 0; }
   .brand { font-size: 13px; }
-  .header-download { padding: 6px 7px; font-size: 11px; }
+  .header-download { margin-left: auto; padding: 6px 7px; font-size: 11px; }
   .page-shell { width: calc(100% - 20px); }
   .hero { padding: 16px; }
   .content-card { padding: 16px 14px; }
