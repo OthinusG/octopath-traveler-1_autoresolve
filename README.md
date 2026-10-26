@@ -1,6 +1,6 @@
 # 八方旅人 1 · 等级压制自动结算
 
-[English](README.en.md) · [使用说明](mod/README.md) · [验证记录](docs/VALIDATION.md)
+[网页说明](https://othinusg.github.io/octopath-traveler-1_autoresolve/) · [English](README.en.md) · [使用说明](mod/README.md) · [验证记录](docs/VALIDATION.md)
 
 基于 **UE4SS 3.0.1** 的《八方旅人 1》Mod：队伍等级明显高于普通暗雷敌人时，跳过战斗转场，直接获得奖励。
 

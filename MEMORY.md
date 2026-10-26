@@ -10,3 +10,6 @@
 - Skipped battles must not simulate combat-only over-limit cleanup, combat-performance bonuses, steal/capture actions or first-species discovery.
 - Earlier native-parameter diagnostic tracing caused object-conversion crashes; it is removed and must not be restored.
 - 49 portable Lua tests and native getter/cold-start checks passed. Full 0.1.3 boosted/knocked-out gameplay and achievement unlock remain untested; see docs/VALIDATION.md.
+- Published v0.1.3 from commit `9ea60963e3afc274d79e801b998396e9aa256024` on 2026-10-26 with a mod-only ZIP and SHA-256 release asset; downloaded assets passed checksum verification, and the 49 portable tests and Lua syntax checks passed.
+- The product documentation site is a native static page in `docs/site/`, published at the repository Pages subpath `/octopath-traveler-1_autoresolve/`; keep local URLs relative to that base and publish only `docs/site` as the Pages artifact.
+- The site uses fixed v0.1.3 facts from repository documentation. GitHub Pages deploys from `main` through `.github/workflows/pages.yml`; review the workflow before merging, enable workflow-based Pages if needed, and verify the public response after deployment.

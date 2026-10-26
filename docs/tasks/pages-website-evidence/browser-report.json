@@ -1,0 +1,83 @@
+{
+  "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/",
+  "viewports": [
+    {
+      "width": 1440,
+      "height": 1000,
+      "name": "desktop-1440",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "documentWidth": 1440,
+      "pageHeight": 3038,
+      "overflow": [],
+      "brokenAnchors": [],
+      "downloadVisible": true,
+      "localStylesheet": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "name": "mobile-390",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "documentWidth": 390,
+      "pageHeight": 4335,
+      "overflow": [],
+      "brokenAnchors": [],
+      "downloadVisible": true,
+      "localStylesheet": true
+    },
+    {
+      "width": 320,
+      "height": 800,
+      "name": "mobile-320",
+      "title": "八方旅人 1 · 等级压制自动结算",
+      "documentWidth": 320,
+      "pageHeight": 4625,
+      "overflow": [],
+      "brokenAnchors": [],
+      "downloadVisible": true,
+      "localStylesheet": true
+    }
+  ],
+  "errors": [],
+  "failedRequests": [],
+  "responses": [
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:8787/octopath-traveler-1_autoresolve/assets/site.css",
+      "status": 200
+    }
+  ],
+  "interaction": {
+    "mobileTocOpens": true,
+    "mobileSectionNavigationWorks": true,
+    "nativeFaqOpens": true,
+    "visibleKeyboardFocusTarget": true
+  }
+}
