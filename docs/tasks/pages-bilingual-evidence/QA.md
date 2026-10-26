@@ -13,3 +13,7 @@ Base path tested: `/octopath-traveler-1_autoresolve/`, served locally with Micro
 Full browser measurements and interactions: `browser-report.json`. Screenshots: `en-desktop-1440.png`, `en-mobile-390.png`, `en-mobile-320.png`, `zh-desktop-1440.png`, `zh-mobile-390.png`, `zh-mobile-320.png`. Visual comparisons and decisions: `fidelity-ledger.md`.
 
 No in-game retest or deployment was performed; this change only updates static product documentation.
+
+## Issuer review and public deployment
+
+Issuer code/content/visual review accepted the branch and independently reran 49 Lua tests, packaging and diff checks. Pages deployment [40291848482](https://github.com/OthinusG/octopath-traveler-1_autoresolve/actions/runs/40291848482) and existing Mod CI passed. Public root English, zh.html and shared CSS returned HTTP 200 and exactly matched reviewed source. Public Edge checks with zh-CN locale passed both languages at 1440/390/320px, visible language/download controls, section anchors, direct/reload Chinese, switching both directions and no-JS rendering; there were no browser exceptions or failed requests.
